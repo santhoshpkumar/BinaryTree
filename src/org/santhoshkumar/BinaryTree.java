@@ -21,9 +21,10 @@ public class BinaryTree {
         bt.postOrder();
         System.out.println();
         System.out.println("Height of Tree: "+bt.getHeight(bt.root));
-        System.out.println("Depth of Tree: "+bt.getDepth(bt.root));
+        System.out.println("Depth of Tree: "+bt.getMaxDepth());
         System.out.println("Width of Tree: "+bt.getMaxWidth());
         System.out.println("Size of Tree: "+bt.getSize(bt.root));
+        System.out.println("Diameter of Tree: "+bt.getDiameter(bt.root));
     }
 
     public void createTree(){
@@ -35,8 +36,10 @@ public class BinaryTree {
         root.left.right = new Node(30);
         root.left.right.left = new Node(29);
         root.left.right.right = new Node(31);
+        //root.left.right.right.right = new Node(32);
 
         root.right.left = new Node(70);
+        root.right.left.right = new Node(71);
         root.right.right = new Node(80);
     }
 
@@ -127,14 +130,14 @@ public class BinaryTree {
         return Math.max(getHeight(node.left), getHeight(node.right))+1;
     }
 
-    public int getDepth(Node node){
+    public int getMaxDepth(){
+        //root node is at depth 0;
         this.maxDepth = 0;
-        findMaxDepth(node, 0);
+        findMaxDepth(root, 0);
         return maxDepth;
     }
 
     private void findMaxDepth(Node node, int depth){
-        //root node is at depth 0;
         if(node != null) {
             if (depth > maxDepth) {
                 maxDepth = depth;
@@ -180,6 +183,23 @@ public class BinaryTree {
         return (1+getSize(node.right)+getSize(node.left));
     }
 
+    public int getDiameter(Node node){
+        if (node == null){
+            return -1;
+        }
+        // Max(1+leftHeight+rightHeight, leftDiameter, rightDiameter
+        int leftHeight = getHeight(node.left)+1; // leaf node has height 0 so add 1
+        int rightHeight = getHeight(node.right)+1;
+        int rootHeight = 1 /*root*/+leftHeight+rightHeight;
+
+        int leftDiameter = getDiameter(node.left);
+        int rightDiameter = getDiameter(node.right);
+        return getMax(rootHeight, leftDiameter, rightDiameter);
+    }
+
+    private int getMax(int one, int two, int three){
+        return (Math.max( one, Math.max(two,three)));
+    }
 }
 
 class Node{
