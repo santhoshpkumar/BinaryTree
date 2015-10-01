@@ -25,6 +25,11 @@ public class BinaryTree {
         System.out.println("Width of Tree: "+bt.getMaxWidth());
         System.out.println("Size of Tree: "+bt.getSize(bt.root));
         System.out.println("Diameter of Tree: "+bt.getDiameter(bt.root));
+        System.out.println("Level Order");
+        bt.levelOrder();
+        System.out.println();
+        System.out.println("Spiral Order");
+        bt.spiralOrder();
     }
 
     public void createTree(){
@@ -118,6 +123,63 @@ public class BinaryTree {
             }
         }
     }
+
+    public void levelOrder(){
+        if(root == null){
+            return;
+        }
+
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            Node node = queue.poll();
+            System.out.print(node.data+" ");
+            if(node.left!=null){
+                queue.add(node.left);
+            }
+            if(node.right!=null){
+                queue.add(node.right);
+            }
+        }
+    }
+
+    public void spiralOrder(){
+        if (root == null){
+            return;
+        }
+
+        Stack<Node> zig = new Stack<Node>();
+        Stack<Node> zag = new Stack<Node>();
+        zig.add(root);
+
+        while(true){
+            while(!zig.isEmpty()){
+                Node node = zig.pop();
+                System.out.print(node.data+" ");
+                if(node.right!=null){
+                    zag.push(node.right);
+                }
+                if(node.left!=null){
+                    zag.push(node.left);
+                }
+            }
+
+            while(!zag.isEmpty()){
+                Node node = zag.pop();
+                System.out.print(node.data+" ");
+                if(node.left!=null){
+                    zig.push(node.left);
+                }
+                if(node.right!=null){
+                    zig.push(node.right);
+                }
+            }
+
+            if(zig.isEmpty() && zag.isEmpty()){
+                return;
+            }
+        }
+     }
 
     public int getHeight(Node node){
         //Leaf node are at height 0;
