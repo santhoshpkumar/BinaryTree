@@ -10,6 +10,7 @@ Binary Tree implementation in Java
 ###BFS
 
     Level order traversal
+    ZigZag order traversal
 
 ###Metrics    
     Depth of the Tree
