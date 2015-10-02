@@ -26,17 +26,33 @@ public class BinaryTree {
         System.out.println("Width of Tree: " + bt.getMaxWidth());
         System.out.println("Size of Tree: " + bt.getSize(bt.root));
         System.out.println("Diameter of Tree: " + bt.getDiameter(bt.root));
+
         System.out.println("Level Order");
         bt.levelOrder();
         System.out.println();
+
         System.out.println("Spiral Order");
         bt.spiralOrder();
         System.out.println();
+
         System.out.println("Left view");
         bt.leftView();
         System.out.println();
+
         System.out.println("Right view");
         bt.rightView();
+        System.out.println();
+
+        System.out.println("Top view");
+        bt.topView();
+        System.out.println();
+
+        System.out.println("Bottom view");
+        bt.bottomView();
+        System.out.println();
+
+        System.out.println("Vertical Order");
+        bt.verticalOrder();
 
     }
 
@@ -291,7 +307,7 @@ public class BinaryTree {
 
     public void rightView(){
         visitedLevel = 0;
-        printRightView(root,visitedLevel+1);
+        printRightView(root, visitedLevel + 1);
     }
 
     public void printRightView(Node node, int level){
@@ -306,6 +322,69 @@ public class BinaryTree {
         printRightView(node.right, level+1);
         printRightView(node.left, level+1);
     }
+
+    public TreeMap<Integer,ArrayList> buildVerticalOrder(){
+        if(root == null){
+            return null;
+        }
+        Queue<NodePack> queue = new LinkedList<NodePack>();
+        TreeMap<Integer,ArrayList> treeMap = new TreeMap<Integer,ArrayList>();
+
+        queue.add(new NodePack(root,0));
+
+        while(!queue.isEmpty()){
+            NodePack node = queue.poll();
+            ArrayList<Node> nodes = treeMap.get(node.level);
+            if (nodes == null){
+                nodes = new ArrayList<Node>();
+            }
+            nodes.add(node.node);
+            treeMap.put(node.level,nodes);
+            if(node.node.left != null){
+                queue.add(new NodePack(node.node.left, node.level-1));
+            }
+            if(node.node.right != null){
+                queue.add(new NodePack(node.node.right, node.level+1));
+            }
+        }
+
+        return treeMap;
+    }
+
+    public void topView(){
+
+        TreeMap<Integer, ArrayList> treeMap = buildVerticalOrder();
+        Set<Integer> keys = treeMap.keySet();
+        for(Integer key: keys){
+            ArrayList<Node> nodes = treeMap.get(key);
+            Node node = nodes.get(0);
+            System.out.print(node.data+" ");
+        }
+    }
+
+    public void bottomView(){
+
+        TreeMap<Integer, ArrayList> treeMap = buildVerticalOrder();
+        Set<Integer> keys = treeMap.keySet();
+        for(Integer key: keys){
+            ArrayList<Node> nodes = treeMap.get(key);
+            Node node = nodes.get(nodes.size()-1);
+            System.out.print(node.data+" ");
+        }
+    }
+
+    public void verticalOrder(){
+
+        TreeMap<Integer, ArrayList> treeMap = buildVerticalOrder();
+        Set<Integer> keys = treeMap.keySet();
+        for(Integer key: keys){
+            ArrayList<Node> nodes = treeMap.get(key);
+            for(int i = 0; i < nodes.size(); i++) {
+                System.out.print(nodes.get(i).data+" ");
+            }
+            System.out.println();
+        }
+    }
 }
 
 class Node{
@@ -319,5 +398,15 @@ class Node{
 
     Node(int data){
         this.data = data;
+    }
+}
+
+class NodePack{
+    Node node;
+    int level;
+
+    NodePack(Node node, int level){
+        this.node  = node;
+        this.level = level;
     }
 }
