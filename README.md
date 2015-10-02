@@ -12,7 +12,8 @@ Binary Tree implementation in Java
     Level order traversal
     ZigZag order traversal or Spiral order traversal
 
-###Metrics    
+###Metrics  
+  
     Depth of the Tree
     Height of the Tree
     Size of the Tree
