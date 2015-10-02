@@ -25,4 +25,4 @@ Binary Tree implementation in Java
     Right View
     Top View
     Bottom View
-    Vertical order view
+    Vertical Order View
