@@ -7,6 +7,7 @@ public class BinaryTree {
 
     Node root;
     int maxDepth;
+    int visitedLevel;
 
     public static void main(String[] args){
         BinaryTree bt = new BinaryTree();
@@ -20,16 +21,23 @@ public class BinaryTree {
         System.out.println("Post Order Traversal");
         bt.postOrder();
         System.out.println();
-        System.out.println("Height of Tree: "+bt.getHeight(bt.root));
-        System.out.println("Depth of Tree: "+bt.getMaxDepth());
-        System.out.println("Width of Tree: "+bt.getMaxWidth());
-        System.out.println("Size of Tree: "+bt.getSize(bt.root));
-        System.out.println("Diameter of Tree: "+bt.getDiameter(bt.root));
+        System.out.println("Height of Tree: " + bt.getHeight(bt.root));
+        System.out.println("Depth of Tree: " + bt.getMaxDepth());
+        System.out.println("Width of Tree: " + bt.getMaxWidth());
+        System.out.println("Size of Tree: " + bt.getSize(bt.root));
+        System.out.println("Diameter of Tree: " + bt.getDiameter(bt.root));
         System.out.println("Level Order");
         bt.levelOrder();
         System.out.println();
         System.out.println("Spiral Order");
         bt.spiralOrder();
+        System.out.println();
+        System.out.println("Left view");
+        bt.leftView();
+        System.out.println();
+        System.out.println("Right view");
+        bt.rightView();
+
     }
 
     public void createTree(){
@@ -261,6 +269,42 @@ public class BinaryTree {
 
     private int getMax(int one, int two, int three){
         return (Math.max( one, Math.max(two,three)));
+    }
+
+    public void leftView(){
+        visitedLevel = 0;
+        printLeftView(root,visitedLevel+1);
+    }
+
+    public void printLeftView(Node node, int level){
+        if(node == null){
+            return;
+        }
+
+        if(level > visitedLevel){
+            visitedLevel++;
+            System.out.print(node.data+" ");
+        }
+        printLeftView(node.left,level+1);
+        printLeftView(node.right,level+1);
+    }
+
+    public void rightView(){
+        visitedLevel = 0;
+        printRightView(root,visitedLevel+1);
+    }
+
+    public void printRightView(Node node, int level){
+        if(node == null){
+            return;
+        }
+
+        if(level > visitedLevel){
+            visitedLevel++;
+            System.out.print(node.data + " ");
+        }
+        printRightView(node.right, level+1);
+        printRightView(node.left, level+1);
     }
 }
 
