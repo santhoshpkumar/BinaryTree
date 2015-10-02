@@ -26,8 +26,3 @@ Binary Tree implementation in Java
     Top View
     Bottom View
     Vertical order view
-
-
-Inorder Successor
-
-Inorder Predecessor
