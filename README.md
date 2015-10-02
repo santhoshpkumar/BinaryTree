@@ -19,7 +19,7 @@ Binary Tree implementation in Java
     Width of the Tree
     Diameter of the Tree
 
-# TODO Views
+###Views
 
     Left view
     Right View
