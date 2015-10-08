@@ -180,22 +180,23 @@ public class BinaryTree {
             while(!zig.isEmpty()){
                 Node node = zig.pop();
                 System.out.print(node.data+" ");
-                if(node.right!=null){
-                    zag.push(node.right);
-                }
                 if(node.left!=null){
                     zag.push(node.left);
                 }
+                if(node.right!=null){
+                    zag.push(node.right);
+                }
             }
 
+            // Given it is zig zag order, need to push the right first, else it will become level order
             while(!zag.isEmpty()){
                 Node node = zag.pop();
                 System.out.print(node.data+" ");
-                if(node.left!=null){
-                    zig.push(node.left);
-                }
                 if(node.right!=null){
                     zig.push(node.right);
+                }
+                if(node.left!=null){
+                    zig.push(node.left);
                 }
             }
 
